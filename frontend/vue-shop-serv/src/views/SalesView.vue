@@ -105,7 +105,7 @@ const resetFilters = () => {
 
       <div v-if="viewMode === 'list'">
         <div class="header-section">
-          <h1>💰 Журнал продаж</h1>
+          <h1>💰 Журнал продажів</h1>
           <button @click="openCreate" class="btn-add-main">+ Нова продаж</button>
         </div>
 
@@ -196,7 +196,7 @@ const resetFilters = () => {
             </div>
 
             <div class="total-preview sale-total">
-              К оплате: <span>{{ (form.quantity * form.price) - form.discount }} грн</span>
+              До виплати: <span>{{ (form.quantity * form.price) - form.discount }} грн</span>
             </div>
           </div>
 

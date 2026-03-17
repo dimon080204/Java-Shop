@@ -172,7 +172,7 @@ const saveProduct = async () => {
       <div v-if="viewMode === 'create' || viewMode === 'edit'" class="create-layout">
 
         <div class="form-card">
-          <h2 class="form-title">{{ viewMode === 'create' ? '✨ Новый товар' : '✏️ Редактирование' }}</h2>
+          <h2 class="form-title">{{ viewMode === 'create' ? '✨ Новий товар' : '✏️ Редагування' }}</h2>
           <div class="form-grid">
             <div class="input-group"><label>SKU</label><input v-model="form.sku" /></div>
             <div class="input-group"><label>Назва</label><input v-model="form.name" /></div>

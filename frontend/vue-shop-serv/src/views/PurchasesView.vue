@@ -61,7 +61,7 @@ const savePurchase = async () => {
 };
 
 const deletePurchase = async (id) => {
-  if (confirm("Удалить запись?")) { await api.delete(`/purchases/${id}`); fetchPurchases(); }
+  if (confirm("Видалити запис?")) { await api.delete(`/purchases/${id}`); fetchPurchases(); }
 };
 
 const resetFilters = () => {
