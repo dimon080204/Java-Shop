@@ -1,5 +1,6 @@
 package com.example.Shop.controllers;
 
+import com.example.Shop.dto.PurchaseDTO;
 import com.example.Shop.dto.SaleDTO;
 import com.example.Shop.services.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,11 @@ public class SaleController {
     @GetMapping("/search/product")
     public List<SaleDTO> getByProduct(@RequestParam String name) {
         return saleService.getSalesByProductName(name);
+    }
+
+    @GetMapping("/search/staff")
+    public List<SaleDTO> getByStaffLastName(@RequestParam String staffLastName) {
+        return saleService.getSalesByStaffLastName(staffLastName);
     }
 
     @GetMapping("/search/dates")

@@ -24,7 +24,7 @@ const fetchEmployees = async () => {
     const response = await api.get('/staff');
     employees.value = response.data;
   } catch (err) {
-    error.value = "Ошибка загрузки списка персонала.";
+    error.value = "Помилка завантаження списку персоналу.";
   } finally {
     loading.value = false;
   }
@@ -33,12 +33,12 @@ const fetchEmployees = async () => {
 onMounted(fetchEmployees);
 
 const deleteEmployee = async (id) => {
-  if (!confirm("Удалить сотрудника из базы?")) return;
+  if (!confirm("Видалити співробітника з бази?")) return;
   try {
     await api.delete(`/staff/${id}`);
     employees.value = employees.value.filter(e => e.id !== id);
   } catch (err) {
-    alert("Ошибка при удалении.");
+    alert("Помилка при видаленні.");
   }
 };
 
@@ -48,7 +48,6 @@ const openCreate = () => {
 };
 
 const openEdit = (emp) => {
-  // Заполняем форму, включая отчество (оно придет из полной модели объекта)
   form.value = { ...emp };
   viewMode.value = 'edit';
 };
@@ -76,7 +75,7 @@ const saveEmployee = async () => {
     fetchEmployees();
     viewMode.value = 'list';
   } catch (err) {
-    alert("Ошибка при сохранении данных сотрудника.");
+    alert("Помилка при збереженні даних співробітника.");
   }
 };
 </script>
@@ -87,24 +86,24 @@ const saveEmployee = async () => {
 
       <div v-if="viewMode === 'list'">
         <div class="header-section">
-          <h1>👥 Управление персоналом</h1>
+          <h1>👥 Керування персоналом</h1>
           <div class="header-actions">
-            <button @click="openCreate" class="btn-add-main">+ Нанять сотрудника</button>
+            <button @click="openCreate" class="btn-add-main">+ Найняти співробітника</button>
             <button @click="fetchEmployees" class="btn-refresh" title="Обновить">🔄</button>
           </div>
         </div>
 
-        <div v-if="loading" class="status">Загрузка данных...</div>
+        <div v-if="loading" class="status">Завантаження даних...</div>
         <div v-else class="table-wrapper">
           <table class="styled-table">
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Имя</th>
-                <th>Фамилия</th>
+                <th>Ім'я</th>
+                <th>Прізвище</th>
                 <th>Телефон</th>
                 <th>Email</th>
-                <th style="text-align: center">Действия</th>
+                <th style="text-align: center">Дії</th>
               </tr>
             </thead>
             <tbody>
@@ -123,23 +122,23 @@ const saveEmployee = async () => {
             </tbody>
           </table>
         </div>
-        <div v-if="!loading && employees.length === 0" class="status">Список сотрудников пуст</div>
+        <div v-if="!loading && employees.length === 0" class="status">Список співробітників порожній</div>
       </div>
 
       <div v-if="viewMode === 'create' || viewMode === 'edit'" class="centered-content">
         <div class="form-card">
-          <h2 class="form-title">{{ viewMode === 'create' ? '✨ Регистрация сотрудника' : '✏️ Изменение данных' }}</h2>
+          <h2 class="form-title">{{ viewMode === 'create' ? '✨ Реєстрація співробітника' : '✏️ Редагування даних' }}</h2>
           <div class="form-grid single-col">
-            <div class="input-group"><label>Фамилия</label><input v-model="form.lastName" placeholder="Иванов" /></div>
-            <div class="input-group"><label>Имя</label><input v-model="form.firstName" placeholder="Иван" /></div>
-            <div class="input-group"><label>Отчество</label><input v-model="form.surname" placeholder="Иванович" /></div>
+            <div class="input-group"><label>Фамилия</label><input v-model="form.lastName" placeholder="Іванов" /></div>
+            <div class="input-group"><label>Имя</label><input v-model="form.firstName" placeholder="Іван" /></div>
+            <div class="input-group"><label>Отчество</label><input v-model="form.surname" placeholder="Іванович" /></div>
             <div class="input-group"><label>Телефон</label><input v-model="form.phone" placeholder="+380..." /></div>
             <div class="input-group"><label>Email</label><input v-model="form.email" placeholder="ivanov@example.com" /></div>
           </div>
 
           <div class="form-footer">
-            <button @click="saveEmployee" class="btn-save">Сохранить</button>
-            <button @click="viewMode = 'list'" class="btn-cancel">Отмена</button>
+            <button @click="saveEmployee" class="btn-save">Зберегти</button>
+            <button @click="viewMode = 'list'" class="btn-cancel">Відмінити</button>
           </div>
         </div>
       </div>
@@ -147,13 +146,13 @@ const saveEmployee = async () => {
       <div v-if="viewMode === 'details'" class="centered-content">
         <div class="details-card">
           <div class="details-header">
-            <button @click="viewMode = 'list'" class="btn-back">← К списку</button>
-            <h2>Карточка сотрудника</h2>
+            <button @click="viewMode = 'list'" class="btn-back">← До списку</button>
+            <h2>Карточка співробітника</h2>
           </div>
 
           <div class="details-content single-view">
             <div class="info-item">
-              <span class="info-key">Полное ФИО:</span>
+              <span class="info-key">Повне ПІБ:</span>
               <span class="info-val">{{ currentEmployee.lastName }} {{ currentEmployee.firstName }} {{ currentEmployee.surname || '' }}</span>
             </div>
             <div class="info-item">
@@ -173,7 +172,6 @@ const saveEmployee = async () => {
 </template>
 
 <style scoped>
-/* Используем ту же базу стилей для единообразия */
 .page-wrapper { margin-top: 20px; padding: 0 20px; }
 .container { max-width: 1200px; margin: 0 auto; }
 
@@ -181,7 +179,6 @@ const saveEmployee = async () => {
 .btn-add-main { background: #42b983; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
 .btn-refresh { background: #333 !important; border: 1px solid #444 !important; color: #ccc !important; border-radius: 6px; padding: 5px 12px; cursor: pointer; }
 
-/* Таблица */
 .table-wrapper { background: #1a1a1a; border-radius: 8px; border: 1px solid #333; overflow: hidden; }
 .styled-table { width: 100%; border-collapse: collapse; }
 .styled-table th { background: #252525; color: #42b983; padding: 14px; text-align: left; border-bottom: 2px solid #333; }
@@ -190,14 +187,12 @@ const saveEmployee = async () => {
 .name-cell { font-weight: bold; color: #fff; }
 .email-text { color: #3498db; }
 
-/* Кнопки */
 .actions { display: flex; gap: 8px; justify-content: center; }
 .btn-icon { border: none; width: 32px; height: 32px; border-radius: 4px; cursor: pointer; color: white; }
 .btn-info { background: #2980b9; }
 .btn-edit { background: #f39c12; }
 .btn-delete { background: #c0392b; }
 
-/* Формы */
 .centered-content { display: flex; justify-content: center; width: 100%; }
 .form-card, .details-card { background: #1e1e1e; padding: 30px; border-radius: 10px; border: 1px solid #333; width: 100%; max-width: 600px; }
 .form-title { color: #42b983; margin-top: 0; margin-bottom: 20px; }
@@ -209,7 +204,6 @@ const saveEmployee = async () => {
 .btn-save { background: #42b983; color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: bold; }
 .btn-cancel, .btn-back { background: #444; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; }
 
-/* Детали */
 .details-header { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
 .info-item { background: #252525; padding: 15px; border-radius: 6px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 5px; }
 .info-key { color: #42b983; font-size: 0.8rem; font-weight: bold; }

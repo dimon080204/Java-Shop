@@ -29,7 +29,7 @@ const fetchProducts = async () => {
     const response = await api.get('/products');
     products.value = response.data;
   } catch (err) {
-    error.value = "Ошибка загрузки данных.";
+    error.value = "Помилка завантаження даних.";
   } finally {
     loading.value = false;
   }
@@ -44,7 +44,7 @@ const searchExternal = async () => {
     const response = await api.get(`/import/search-external?query=${externalSearchQuery.value}`);
     externalResults.value = response.data;
   } catch (err) {
-    alert("Ошибка внешнего поиска");
+    alert("Помилка зовнішнього пошуку");
   } finally {
     isExternalLoading.value = false;
   }
@@ -56,18 +56,18 @@ const fillFormFromExternal = (item) => {
   form.value.category = item.category;
   form.value.price = item.price;
   form.value.descriptionEntries = [
-    { key: 'Источник', value: 'DummyJSON' },
-    { key: 'Описание', value: item.description }
+    { key: 'Джерело', value: 'DummyJSON' },
+    { key: 'Опис', value: item.description }
   ];
 };
 
 const deleteProduct = async (id) => {
-  if (!confirm("Удалить этот товар?")) return;
+  if (!confirm("Видалити цей товар?")) return;
   try {
     await api.delete(`/products/${id}`);
     products.value = products.value.filter(p => p.id !== id);
   } catch (err) {
-    alert("Ошибка при удалении.");
+    alert("Помилка при видаленні.");
   }
 };
 
@@ -77,6 +77,7 @@ const openCreate = () => {
   externalSearchQuery.value = '';
   viewMode.value = 'create';
 };
+
 
 const openEdit = (product) => {
   const entries = product.description
@@ -119,7 +120,7 @@ const saveProduct = async () => {
     fetchProducts();
     viewMode.value = 'list';
   } catch (err) {
-    alert("Ошибка при сохранении.");
+    alert("Помилка при збереженні.");
   }
 };
 </script>
@@ -130,24 +131,24 @@ const saveProduct = async () => {
 
       <div v-if="viewMode === 'list'">
         <div class="header-section">
-          <h1>📦 Склад товаров</h1>
+          <h1>📦 Склад товарів</h1>
           <div class="header-actions">
-            <button @click="openCreate" class="btn-add-main">+ Добавить товар</button>
+            <button @click="openCreate" class="btn-add-main">+ Додати товар</button>
             <button @click="fetchProducts" class="btn-refresh" title="Обновить">🔄</button>
           </div>
         </div>
 
-        <div v-if="loading" class="status">Загрузка данных...</div>
+        <div v-if="loading" class="status">Завантаження даних...</div>
         <div v-else class="table-wrapper">
           <table class="styled-table">
             <thead>
               <tr>
                 <th>SKU</th>
-                <th>Наименование</th>
-                <th>Категория</th>
-                <th>Кол-во</th>
-                <th>Цена</th>
-                <th style="text-align: center">Действия</th>
+                <th>Назва</th>
+                <th>Категорія</th>
+                <th>Кількість</th>
+                <th>Ціна</th>
+                <th style="text-align: center">Дії</th>
               </tr>
             </thead>
             <tbody>
@@ -174,33 +175,33 @@ const saveProduct = async () => {
           <h2 class="form-title">{{ viewMode === 'create' ? '✨ Новый товар' : '✏️ Редактирование' }}</h2>
           <div class="form-grid">
             <div class="input-group"><label>SKU</label><input v-model="form.sku" /></div>
-            <div class="input-group"><label>Наименование</label><input v-model="form.name" /></div>
-            <div class="input-group"><label>Категория</label><input v-model="form.category" /></div>
-            <div class="input-group"><label>Количество</label><input type="number" v-model="form.quantity" /></div>
-            <div class="input-group"><label>Цена (грн)</label><input type="number" v-model="form.price" /></div>
+            <div class="input-group"><label>Назва</label><input v-model="form.name" /></div>
+            <div class="input-group"><label>Категорія</label><input v-model="form.category" /></div>
+            <div class="input-group"><label>Кількість</label><input type="number" v-model="form.quantity" /></div>
+            <div class="input-group"><label>Ціна (грн)</label><input type="number" v-model="form.price" /></div>
           </div>
 
           <h3 class="sub-title">Характеристики (JSON)</h3>
           <div v-for="(entry, index) in form.descriptionEntries" :key="index" class="json-row">
             <input v-model="entry.key" placeholder="Ключ" />
-            <input v-model="entry.value" placeholder="Значение" />
+            <input v-model="entry.value" placeholder="Значення" />
             <button @click="removeDescriptionField(index)" class="btn-remove-json">✕</button>
           </div>
-          <button @click="addDescriptionField" class="btn-add-json">+ Добавить поле</button>
+          <button @click="addDescriptionField" class="btn-add-json">+ Додати поле</button>
 
           <div class="form-footer">
-            <button @click="saveProduct" class="btn-save">Сохранить</button>
-            <button @click="viewMode = 'list'" class="btn-cancel">Отмена</button>
+            <button @click="saveProduct" class="btn-save">Зберегти</button>
+            <button @click="viewMode = 'list'" class="btn-cancel">Відмінити</button>
           </div>
         </div>
 
         <div v-if="viewMode === 'create'" class="external-search-card">
           <h3 class="search-title">🔍 Импорт (DummyJSON)</h3>
           <div class="search-input-wrapper">
-            <input v-model="externalSearchQuery" @keyup.enter="searchExternal" placeholder="Поиск (н-р: laptop)..." />
-            <button @click="searchExternal" class="btn-search-ext">Найти</button>
+            <input v-model="externalSearchQuery" @keyup.enter="searchExternal" placeholder="Пошук (н-р: laptop)..." />
+            <button @click="searchExternal" class="btn-search-ext">Знайти</button>
           </div>
-          <div v-if="isExternalLoading" class="status-sm">Поиск...</div>
+          <div v-if="isExternalLoading" class="status-sm">Пошук...</div>
           <div class="external-results">
             <div v-for="item in externalResults" :key="item.sku" class="external-item" @click="fillFormFromExternal(item)">
               <img :src="item.thumbnail" class="ext-thumb" />
@@ -222,9 +223,9 @@ const saveProduct = async () => {
         <div class="details-content">
           <div class="main-info">
             <p><strong>SKU:</strong> {{ currentProduct.sku }}</p>
-            <p><strong>Категория:</strong> {{ currentProduct.category }}</p>
-            <p><strong>Цена:</strong> {{ currentProduct.price }} грн</p>
-            <p><strong>Дата обн.:</strong> {{ new Date(currentProduct.updatedAt).toLocaleString() }}</p>
+            <p><strong>Категорія:</strong> {{ currentProduct.category }}</p>
+            <p><strong>Ціна:</strong> {{ currentProduct.price }} грн</p>
+            <p><strong>Дата он.:</strong> {{ new Date(currentProduct.updatedAt).toLocaleString() }}</p>
           </div>
           <div class="json-info">
             <h3>Характеристики:</h3>
@@ -240,15 +241,13 @@ const saveProduct = async () => {
 </template>
 
 <style scoped>
-/* ПРАВКИ ВИЗУАЛА */
-.price-cell { font-weight: bold; color: #42b983 !important; } /* Принудительно зеленый */
-.ext-price { color: #42b983 !important; } /* Принудительно зеленый в поиске */
+.price-cell { font-weight: bold; color: #42b983 !important; }
+.ext-price { color: #42b983 !important; }
 
 .btn-refresh { background: #333 !important; border: 1px solid #444 !important; color: #ccc !important; border-radius: 6px; padding: 5px 12px; cursor: pointer; }
 .btn-add-json { background: #333 !important; color: #ccc !important; border: 1px solid #444 !important; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-top: 5px; }
 .btn-remove-json { background: none !important; border: 1px solid #c0392b !important; color: #c0392b !important; padding: 0 12px; border-radius: 5px; cursor: pointer; }
 
-/* ОСТАЛЬНЫЕ СТИЛИ БЕЗ ИЗМЕНЕНИЙ */
 .page-wrapper { margin-top: 20px; padding: 0 20px; }
 .container { max-width: 1200px; margin: 0 auto; }
 .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid #444; padding-bottom: 15px; }

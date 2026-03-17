@@ -162,7 +162,9 @@ public class SaleService {
         dto.setId(sale.getId());
         dto.setQuantity(sale.getQuantity());
         dto.setPrice(sale.getPrice());
+        dto.setDiscount(sale.getDiscount());
         dto.setTotalPrice(sale.getTotalPrice());
+        dto.setPaymentMethod(sale.getPaymentMethod());
         dto.setSaleDate(sale.getSaleDate());
         dto.setProductId(sale.getProduct().getId());
         dto.setStaffId(sale.getStaff().getId());

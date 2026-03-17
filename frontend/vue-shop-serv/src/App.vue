@@ -7,8 +7,8 @@ import { RouterLink, RouterView } from 'vue-router'
     <nav class="main-nav">
       <RouterLink to="/">Склад</RouterLink>
       <RouterLink to="/employees">Персонал</RouterLink>
-      <RouterLink to="/purchases">Закупки</RouterLink>
-      <RouterLink to="/sales">Продажи</RouterLink>
+      <RouterLink to="/purchases">Закупівлі</RouterLink>
+      <RouterLink to="/sales">Продажі</RouterLink>
     </nav>
   </header>
 
@@ -18,7 +18,6 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style>
-/* Базовые стили, чтобы не было вырвиглазно */
 .main-nav {
   background: #333;
   padding: 1rem;
@@ -31,7 +30,7 @@ import { RouterLink, RouterView } from 'vue-router'
   font-weight: bold;
 }
 .main-nav a.router-link-active {
-  color: #42b983; /* Подсветка активной страницы */
+  color: #42b983;
 }
 .content {
   padding: 20px;
