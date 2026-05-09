@@ -130,8 +130,10 @@ const resetFilters = () => {
               <label>Товар</label>
               <div class="select-with-btn">
                 <select v-model="form.productId">
-                  <option :value="null">Выберите товар...</option>
-                  <option v-for="prod in products" :key="prod.id" :value="prod.id">{{ prod.name }}</option>
+                  <option :value="null">Виберіть товар...</option>
+                  <option v-for="prod in products" :key="prod.id" :value="prod.id">
+                    {{ prod.name }} ({{ prod.quantity }} в наявності)
+                  </option>
                 </select>
               </div>
             </div>

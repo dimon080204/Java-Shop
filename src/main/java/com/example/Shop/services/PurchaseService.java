@@ -29,7 +29,7 @@ public class PurchaseService {
     private StaffRepository staffRepository;
 
     public List<PurchaseDTO> getAllPurchases() {
-        return purchaseRepository.findAll().stream()
+        return purchaseRepository.findAllByOrderByPurchaseDateDesc().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }

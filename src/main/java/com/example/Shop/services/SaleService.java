@@ -31,7 +31,7 @@ public class SaleService {
     private StaffRepository staffRepository;
 
     public List<SaleDTO> getAllSales() {
-        return saleRepository.findAll().stream()
+        return saleRepository.findAllByOrderBySaleDateDesc().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }

@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
+    List<Purchase> findAllByOrderByPurchaseDateDesc();
     List<Purchase> findByProductNameContainingIgnoreCase(String productName);
     List<Purchase> findByStaffLastNameContainingIgnoreCase(String lastName);
     List<Purchase> findByPurchaseDateBetween(LocalDateTime start, LocalDateTime end);

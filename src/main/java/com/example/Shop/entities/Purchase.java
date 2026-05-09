@@ -51,20 +51,6 @@ public class Purchase implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Purchase purchase = (Purchase) o;
-        return Objects.equals(id, purchase.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
-
-    @Override
     public String toString() {
         return "Purchases{" +
                 "id=" + id +

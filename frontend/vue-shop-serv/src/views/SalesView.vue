@@ -187,7 +187,7 @@ const resetFilters = () => {
             <div class="form-row-flex">
               <div class="input-group"><label>Знижка (загальна)</label><input type="number" v-model="form.discount" /></div>
               <div class="input-group">
-                <label>Метод оплаты</label>
+                <label>Спосіб оплати</label>
                 <select v-model="form.paymentMethod">
                   <option value="card">Карта</option>
                   <option value="cash">Готівка</option>

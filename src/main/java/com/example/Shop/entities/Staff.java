@@ -38,20 +38,6 @@ public class Staff implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Staff staff = (Staff) o;
-        return id != null && id.equals(staff.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
-
-    @Override
     public String toString() {
         return "Staff{" +
                 "id=" + id +

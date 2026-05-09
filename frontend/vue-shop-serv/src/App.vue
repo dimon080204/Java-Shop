@@ -9,6 +9,7 @@ import { RouterLink, RouterView } from 'vue-router'
       <RouterLink to="/employees">Персонал</RouterLink>
       <RouterLink to="/purchases">Закупівлі</RouterLink>
       <RouterLink to="/sales">Продажі</RouterLink>
+      <RouterLink to="/analytics">Аналітика</RouterLink>
     </nav>
   </header>
 

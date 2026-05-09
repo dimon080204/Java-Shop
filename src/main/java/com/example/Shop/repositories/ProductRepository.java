@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     // Spring Data JPA writes realisation for work with table "Goods"
+    List<Product> findAllByOrderByCreatedAtDesc();
     List<Product> findByName(String name);
     Optional<Product> findBySku(String sku);
 }

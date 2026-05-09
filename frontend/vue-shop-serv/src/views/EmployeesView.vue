@@ -129,9 +129,9 @@ const saveEmployee = async () => {
         <div class="form-card">
           <h2 class="form-title">{{ viewMode === 'create' ? '✨ Реєстрація співробітника' : '✏️ Редагування даних' }}</h2>
           <div class="form-grid single-col">
-            <div class="input-group"><label>Фамилия</label><input v-model="form.lastName" placeholder="Іванов" /></div>
-            <div class="input-group"><label>Имя</label><input v-model="form.firstName" placeholder="Іван" /></div>
-            <div class="input-group"><label>Отчество</label><input v-model="form.surname" placeholder="Іванович" /></div>
+            <div class="input-group"><label>Прізвище</label><input v-model="form.lastName" placeholder="Іванов" /></div>
+            <div class="input-group"><label>Ім'я</label><input v-model="form.firstName" placeholder="Іван" /></div>
+            <div class="input-group"><label>По батькові</label><input v-model="form.surname" placeholder="Іванович" /></div>
             <div class="input-group"><label>Телефон</label><input v-model="form.phone" placeholder="+380..." /></div>
             <div class="input-group"><label>Email</label><input v-model="form.email" placeholder="ivanov@example.com" /></div>
           </div>

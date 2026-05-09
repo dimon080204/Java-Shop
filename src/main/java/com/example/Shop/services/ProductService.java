@@ -19,7 +19,7 @@ public class ProductService {
 
     public List<ProductDTO> getAllProducts() {
         // Get all goods from repository and transform them into DTO list
-        return productRepository.findAll().stream()
+        return productRepository.findAllByOrderByCreatedAtDesc().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
