@@ -26,7 +26,7 @@ public class KPIService {
         List<Staff> allStaff = staffRepository.findAll();
         List<Sale> allSales = saleRepository.findBySaleDateBetween(start, end);
 
-        // 1. Собираем базовую статистику по каждому сотруднику
+        // 1. Get basic metrics for each staff member
         List<StaffKPIDTO> dtos = allStaff.stream().map(worker -> {
             List<Sale> workerSales = allSales.stream()
                     .filter(s -> s.getStaff().getId().equals(worker.getId()))
@@ -50,12 +50,12 @@ public class KPIService {
             return dto;
         }).collect(Collectors.toList());
 
-        // 2. Считаем средние показатели по магазину для нормировки
+        // 2. Calculate averages for normalization (to avoid division by zero, use 1.0 as default)
         double avgRev = dtos.stream().mapToDouble(d -> d.getTotalRevenue().doubleValue()).average().orElse(1.0);
         double avgCnt = dtos.stream().mapToLong(StaffKPIDTO::getSalesCount).average().orElse(1.0);
         double avgChk = dtos.stream().mapToDouble(d -> d.getAverageCheck().doubleValue()).average().orElse(1.0);
 
-        // 3. Рассчитываем финальный KPI Score (взвешенный коэффициент)
+        // 3. Calculate KPI score with weighted metrics (weights can be adjusted as needed)
         for (StaffKPIDTO d : dtos) {
             double score = (0.5 * (d.getTotalRevenue().doubleValue() / (avgRev > 0 ? avgRev : 1))) +
                     (0.3 * (d.getSalesCount() / (avgCnt > 0 ? avgCnt : 1))) +
@@ -63,7 +63,7 @@ public class KPIService {
             d.setKpiScore(Math.round(score * 100.0) / 100.0);
         }
 
-        // Сортируем: лучшие продавцы вверху
+        // Sort by KPI score in descending order
         dtos.sort((a, b) -> b.getKpiScore().compareTo(a.getKpiScore()));
         return dtos;
     }

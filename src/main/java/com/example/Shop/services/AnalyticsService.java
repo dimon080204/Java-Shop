@@ -23,11 +23,11 @@ public class AnalyticsService {
     private SaleRepository saleRepository;
 
     public List<AnalyticsDTO> getABCAnalysis(LocalDateTime start, LocalDateTime end) {
-        // 1. Получаем все данные за период
+        // 1. Get all purchases and sales in the period
         List<Purchase> periodPurchases = purchaseRepository.findByPurchaseDateBetween(start, end);
         List<Sale> periodSales = saleRepository.findBySaleDateBetween(start, end);
 
-        // 2. Считаем среднюю себестоимость для каждого товара
+        // 2. Count average cost per product (weighted by quantity)
         Map<Long, BigDecimal> avgCosts = periodPurchases.stream()
                 .collect(Collectors.groupingBy(
                         p -> p.getProduct().getId(),
@@ -43,7 +43,7 @@ public class AnalyticsService {
                         )
                 ));
 
-        // 3. Группируем продажи по товарам и считаем прибыль
+        // 3. Group sales by product and calculate profit
         Map<Long, AnalyticsDTO> analyticsMap = new HashMap<>();
 
         for (Sale sale : periodSales) {
@@ -61,10 +61,10 @@ public class AnalyticsService {
 
         List<AnalyticsDTO> result = new ArrayList<>(analyticsMap.values());
 
-        // 4. Сортируем по прибыли для ABC
+        // 4. Sort by profit descending
         result.sort((a, b) -> b.getProfit().compareTo(a.getProfit()));
 
-        // 5. Присваиваем категории A, B, C
+        // 5. Apply ABC classification based on cumulative profit share
         BigDecimal totalProfit = result.stream()
                 .map(AnalyticsDTO::getProfit)
                 .filter(p -> p.compareTo(BigDecimal.ZERO) > 0)
