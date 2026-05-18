@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Map;
 
 @Data
@@ -16,4 +18,5 @@ public class ProductDTO {
     private BigDecimal price;
     private String category;
     private Map<String, Object> description;
+    private LocalDateTime updatedAt;
 }

@@ -123,6 +123,24 @@ const saveProduct = async () => {
     alert("Помилка при збереженні.");
   }
 };
+
+const searchQuery = ref('');
+
+const handleSearch = async () => {
+  if (!searchQuery.value.trim()) {
+    fetchProducts(); 
+    return;
+  }
+  try {
+    loading.value = true;
+    const response = await api.get(`/products/search?query=${searchQuery.value}`);
+    products.value = response.data;
+  } catch (err) {
+    console.error("Ошибка поиска:", err);
+  } finally {
+    loading.value = false;
+  }
+};
 </script>
 
 <template>
@@ -132,6 +150,17 @@ const saveProduct = async () => {
       <div v-if="viewMode === 'list'">
         <div class="header-section">
           <h1>📦 Склад товарів</h1>
+
+          <div class="search-box">
+            <input
+              v-model="searchQuery"
+              @input="handleSearch"
+              placeholder="Пошук за назвою або SKU..."
+              class="search-input"
+            />
+            <span class="search-icon">🔍</span>
+          </div>
+
           <div class="header-actions">
             <button @click="openCreate" class="btn-add-main">+ Додати товар</button>
             <button @click="fetchProducts" class="btn-refresh" title="Обновить">🔄</button>
@@ -241,6 +270,38 @@ const saveProduct = async () => {
 </template>
 
 <style scoped>
+.search-box {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+  margin: 0 20px;
+}
+
+.search-input {
+  width: 100%;
+  background: #111;
+  border: 1px solid #444;
+  color: white;
+  padding: 10px 15px 10px 40px;
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+
+.search-input:focus {
+  border-color: #42b983;
+  outline: none;
+  box-shadow: 0 0 8px rgba(66, 185, 131, 0.2);
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  pointer-events: none;
+}
+
 .price-cell { font-weight: bold; color: #42b983 !important; }
 .ext-price { color: #42b983 !important; }
 

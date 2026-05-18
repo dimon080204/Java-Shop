@@ -6,11 +6,9 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const handleLogout = () => {
-  // 1. Удаляем токен и данные пользователя
   localStorage.removeItem('token');
   localStorage.removeItem('username');
 
-  // 2. Перенаправляем на страницу логина
   router.push('/login');
 };
 </script>
@@ -53,7 +51,7 @@ const handleLogout = () => {
   color: #42b983;
 }
 .logout-btn {
-  margin-left: auto; /* Прижмет кнопку к правому краю */
+  margin-left: auto; 
   background: transparent;
   border: 1px solid #ff5252;
   color: #ff5252;

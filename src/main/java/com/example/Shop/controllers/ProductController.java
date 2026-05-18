@@ -55,4 +55,9 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with ID " + id + " is already deleted or not found");
         }
     }
+
+    @GetMapping("/search")
+    public List<ProductDTO> search(@RequestParam String query) {
+        return productService.searchProducts(query);
+    }
 }

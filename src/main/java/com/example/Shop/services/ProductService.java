@@ -64,6 +64,14 @@ public class ProductService {
         return false;
     }
 
+    public List<ProductDTO> searchProducts(String query) {
+        return productRepository.findAll().stream()
+                .filter(p -> p.getName().toLowerCase().contains(query.toLowerCase())
+                        || p.getSku().toLowerCase().contains(query.toLowerCase()))
+                .map(this::convertToDTO)
+                .toList();
+    }
+
     private ProductDTO convertToDTO(Product product) {
         ProductDTO dto = new ProductDTO();
         dto.setId(product.getId());
@@ -73,6 +81,7 @@ public class ProductService {
         dto.setPrice(product.getPrice());
         dto.setCategory(product.getCategory());
         dto.setDescription(product.getDescription());
+        dto.setUpdatedAt(product.getUpdatedAt());
         return dto;
     }
 }
